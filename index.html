@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComediARG</title>
+ <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(180deg, #74ACDF 0%, #74ACDF 33%, #74ACDF 33%, #74ACDF 66%, #74ACDF 66%, #74ACDF 100%);
+            background-attachment: fixed;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #FFD700, #FFA500);
+            border-radius: 50%;
+            opacity: 0.3;
+            z-index: -1;
+            box-shadow: 0 0 30px #FFD700;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0033A0, #74ACDF);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo::after {
+            content: ' 🇦🇷';
+            font-size: 1.2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 2px 0;
+            transition: 0.3s;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        h1 {
+            color: #0033A0;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #0033A0;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-text {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #555;
+            font-style: italic;
+        }
+
+        .joke-container {
+            background: rgba(255,255,255,0.95);
+            border: 3px solid #74ACDF;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0,51,160,0.15);
+            position: relative;
+        }
+
+        .joke-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #0033A0, #74ACDF);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,51,160,0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,51,160,0.4);
+        }
+
+        .btn:disabled {
+            background: #74ACDF;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .counter {
+            text-align: center;
+            color: #0033A0;
+            margin: 1rem 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .about-content {
+            background: rgba(97, 189, 212, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 3px solid #74ACDF;
+            box-shadow: 0 8px 25px rgba(0,51,160,0.15);
+        }
+
+        .contact {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #74ACDF20, #FFD70020);
+            border-radius: 10px;
+            border-left: 5px solid #0033A0;
+        }
+
+        .argentina-pride {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(86, 214, 231, 0.8);
+            border-radius: 10px;
+            border: 2px solid #74ACDF;
+        }
+
+        .argentina-pride h3 {
+            color: #0033A0;
+            margin-bottom: 0.5rem;
+        }
+
+        .argentina-pride p {
+            color: #555;
+            font-style: italic;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #0033A0, #74ACDF);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+        }
+
+        .footer-argentina {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, #0033A0, #74ACDF);
+                flex-direction: column;
+                justify-content: start;
+                align-items: center;
+                padding-top: 3rem;
+                transition: left 0.3s;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu a {
+                font-size: 1.3rem;
+                margin: 1rem 0;
+                padding: 1rem 2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                margin: 5px 0;
+                width: 100%;
+                max-width: 250px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .joke-container {
+                padding: 2rem;
+            }
+
+            .joke-text {
+                font-size: 1.1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">ComediARG</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('about')">Acerca De</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <div id="home" class="section">
+            <h1>¡comediARG, chistes de buena calidad!</h1>
+            
+            <div class="joke-container">
+                <div class="joke-text" id="jokeText">
+                    Haz clic en "Siguiente" para ver un chiste
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn" id="prevBtn" onclick="previousJoke()" disabled>Anterior</button>
+                <button class="btn" id="nextBtn" onclick="nextJoke()">Siguiente</button>
+            </div>
+
+            <div class="counter" id="counter">Chiste 0 de 10</div>
+        </div>
+
+        <div id="about" class="section hidden">
+            <h1>Acerca De</h1>
+            
+            <div class="about-content">
+                <h2>Sobre esta web</h2>
+                <p>Esta pagina web fue creada para alegrarte el dia con los mejores chistes de la actualidad.</p>
+                
+                <div class="contact">
+                    <h3>Contacto</h3>
+                    <p><strong>Creador:</strong> Lautaro Kidyba</p>
+                    <p><strong>Gmail:</strong> lkidyba@uade.edu.ar</p>
+                    <p><strong>Utilidad de la web</strong> Este sitio WEB se creo para que pases el rato riendote de unos buenos chistes</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; ComediARG. derechos reservados.</p>
+    </footer>
+
+    <script>
+        const jokes = [
+            "Que le dice un jardinero a otro? Nos vemos cuando podamos.",
+            "El otro dia vendi mi aspiradora. Lo unico que hacia era acumular polvo.",
+            "Habia un tipo que era tan borrachin que le llamaban genio porque cada vez que destapaban una botella aparecía.",
+            "Has oodo hablar del astronauta claustrofobico? Solo necesitaba un poco de espacio.",
+            "Como se despiden los quimicos? Acido un placer.",
+            "Como se llama el campeon de buceo japones? Tokofondo.",
+            "Iba a contar un chiste sobre sodio... pero Na.",
+            "Que le dice un gusano a otro? Me voy a dar la vuelta a la manzana.",
+            "Que hace una abeja en un gimnasio? Zumba.",
+            "Si se muere una pulga, adonde va? Al pulgatorio."
+        ];
+
+        let currentIndex = -1;
+
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(section).classList.remove('hidden');
+            document.getElementById('navMenu').classList.remove('active');
+        }
+
+        function updateJoke() {
+            const jokeText = document.getElementById('jokeText');
+            const counter = document.getElementById('counter');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (currentIndex >= 0) {
+                jokeText.textContent = jokes[currentIndex];
+                counter.textContent = `Chiste ${currentIndex + 1} de ${jokes.length}`;
+            }
+
+            prevBtn.disabled = currentIndex <= 0;
+            nextBtn.disabled = currentIndex >= jokes.length - 1;
+        }
+
+        function nextJoke() {
+            if (currentIndex < jokes.length - 1) {
+                currentIndex++;
+                updateJoke();
+            }
+        }
+
+        function previousJoke() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateJoke();
+            }
+        }
+
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('active');
+        });
+
+        showSection('home');
+    </script>
+</body>
+</html>
